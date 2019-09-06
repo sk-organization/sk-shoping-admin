@@ -1,3 +1,3 @@
-# Baklol App
+# SK App
 
-Admin For Baklol App
+Admin For SK App
