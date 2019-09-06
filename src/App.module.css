@@ -1,0 +1,18 @@
+.PageHeader {
+  background: #fff;
+}
+
+.Content {
+  margin: 16px;
+  background: #fff;
+  padding: 16px;
+  /* height: 80vh; */
+}
+
+.Footer {
+  text-align: center;
+}
+
+.Layout {
+  min-height: 100vh;
+}

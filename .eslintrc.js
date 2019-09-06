@@ -1,0 +1,41 @@
+module.exports = {
+  env: {
+    browser: true,
+    es6: true,
+    node: true,
+  },
+  extends: ['airbnb'],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  plugins: ['react'],
+  rules: {
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/prop-types': 0,
+    quotes: ['error', 'single'],
+    semi: 'off',
+    'arrow-parens': [2, 'as-needed'],
+    'object-curly-newline': 'off',
+    'react/jsx-one-expression-per-line': 'off',
+    'no-shadow': 'off',
+    'react/jsx-wrap-multilines': 'off',
+    'nonblock-statement-body-position': 'off',
+    'implicit-arrow-linebreak': 'off',
+    'operator-linebreak': 'off',
+    'linebreak-style': 'off',
+    'import/prefer-default-export': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
+    // 'no-console': 'off',
+    'jsx-a11y/label-has-for': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
+    'no-console': 'off',
+  },
+};
