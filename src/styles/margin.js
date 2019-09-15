@@ -21,6 +21,7 @@ export default {
   ml5: {
     marginLeft: 5,
   },
+
   // margin 10
   m10: {
     margin: 10,
@@ -61,6 +62,9 @@ export default {
   },
   mb15: {
     marginBottom: 15,
+  },
+  mb30: {
+    marginBottom: 30,
   },
   ml15: {
     marginLeft: 15,

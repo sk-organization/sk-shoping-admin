@@ -8,14 +8,14 @@ const Customer = ({ customer = {} }) => {
       <h3>Customer Info</h3>
       <Row>
         <Col span={6}>
-          <div>Name:</div>
-          <div>Phone:</div>
-          <div>Email:</div>
+          {customer.name && <div>Name</div>}
+          {customer.phone && <div>Phone</div>}
+          {customer.email && <div>Email</div>}
         </Col>
         <Col>
           <div style={text.strong}>{customer.name}</div>
           <div style={text.strong}>{customer.phone}</div>
-          {customer.email && <div style={text.strong}>{customer.email}</div>}
+          <div style={text.strong}>{customer.email}</div>
         </Col>
       </Row>
     </>

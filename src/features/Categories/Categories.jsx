@@ -69,12 +69,6 @@ const Categories = () => {
     <div>
       <Row style={margin.mb15}>
         <Col span={12}>
-          <Button onClick={addNewCategory} type="primary">
-            <Icon type="plus" />
-            Add New
-          </Button>
-        </Col>
-        <Col span={12} style={align.right}>
           <Search
             autoComplete="on"
             style={component.search}
@@ -82,6 +76,12 @@ const Categories = () => {
             enterButton="Search"
             onChange={searchCategories}
           />
+        </Col>
+        <Col span={12} style={align.right}>
+          <Button onClick={addNewCategory} type="primary">
+            <Icon type="plus" />
+            Add New
+          </Button>
         </Col>
       </Row>
       <Table

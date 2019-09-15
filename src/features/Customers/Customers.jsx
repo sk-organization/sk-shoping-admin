@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Search from 'antd/lib/transfer/search';
 import { navigate } from '@reach/router';
-import { Button, Table } from 'antd';
+import { Button, Table, Row, Col } from 'antd';
 import { query } from './graphql';
 import { customersTable } from './config';
 import client from '../../app/config/apollo';
-import { component } from '../../styles';
+import { align, margin, component } from '../../styles';
 
 const Customers = () => {
   const [loading, setLoading] = useState(false);
@@ -46,30 +46,28 @@ const Customers = () => {
     },
   }));
 
-  const style = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: 15,
-  };
-
   return (
     <div>
-      <div style={style}>
-        <h3>Listing All Customers</h3>
-        <Button
-          onClick={() => navigate('/products/add-product')}
-          type="primary"
-        >
-          Add New Customers
-        </Button>
-      </div>
-
-      <Search
-        autoComplete="on"
-        placeholder="Search Users"
-        enterButton
-        style={{ width: 120 }}
-      />
+      <Row style={margin.mb15}>
+        <Col span={12}>
+          <Search
+            style={component.search}
+            placeholder="search customer"
+            enterButton="Search"
+            size="small"
+          />
+        </Col>
+        <Col span={12} style={align.right}>
+          <div>
+            <Button
+              onClick={() => navigate('/products/add-product')}
+              type="primary"
+            >
+              Add New Customers
+            </Button>
+          </div>
+        </Col>
+      </Row>
 
       <Table
         onRow={user => ({

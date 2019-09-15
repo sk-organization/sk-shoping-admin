@@ -1,12 +1,14 @@
 import React from 'react';
-import { Row, Col, Icon, Table, Spin } from 'antd';
+import { Row, Col, Icon, Table, Spin, Steps } from 'antd';
 import { query } from '../graphql';
 import Customer from './BasicInfo/Customer';
 import { useData } from '../../hooks';
 import Shipping from './BasicInfo/Shipping';
 import Billing from './BasicInfo/Billing';
 import { orderProduct } from './config';
-import { align } from '../../../styles';
+import { align, margin } from '../../../styles';
+
+const { Step } = Steps;
 
 const OrderInfo = props => {
   const { id } = props;
@@ -63,25 +65,36 @@ const OrderInfo = props => {
       };
     });
 
+  const printOrder = () => {
+    window.print();
+  };
+
   return (
     <Spin spinning={loading}>
-      <div>
+      <>
         <Row span={10}>
-          <Col span={18}>
+          <Col span={12}>
             <h3>
-              Order Id: <strong>{order.id}</strong>{' '}
+              Order ID# <strong>{order.id}</strong>{' '}
             </h3>
           </Col>
-          <Col span={6}>
-            <Icon
-              style={{ fontSize: '35px', textAlign: 'center' }}
-              type="printer"
-            />
+          <Col span={12}>
+            <div
+              style={{
+                fontSize: 30,
+                textAlign: 'right',
+                boxSizing: 'border-box',
+                cursor: 'pointer',
+                fontWeight: '400',
+              }}
+            >
+              <Icon onClick={printOrder} title="Print" type="printer" />
+            </div>
           </Col>
         </Row>
         <hr />
-      </div>
-      <Row>
+      </>
+      <Row style={margin.mb30}>
         <Col span={8}>
           <Customer customer={order.orderBy} />
         </Col>
@@ -89,11 +102,18 @@ const OrderInfo = props => {
           <Shipping shipping={order.shippingAddress} />
         </Col>
         <Col span={8}>
-          <Billing billing={order.paymentMethod} />
+          <Billing billing={order.paymentMethod} status={order.status} />
         </Col>
       </Row>
-      <br />
-      <br />
+
+      <div className="steps" style={margin.mb30}>
+        <Steps size="small" direction="horizontal" current={1}>
+          <Step title="Finished" description="This is a description." />
+          <Step title="In Progress" description="This is a description." />
+          <Step title="Dispatch" description="This is a description." />
+          <Step title="Waiting" description="This is a description." />
+        </Steps>
+      </div>
       <Table
         loading={loading}
         dataSource={productsMapped}
@@ -103,9 +123,9 @@ const OrderInfo = props => {
       <Row>
         <Col span={12} />
         <Col span={12} style={{ ...align.right, fontSize: 17, marginTop: 30 }}>
-          <div>
+          <>
             Grand Total: <strong>₹ {order.total}</strong>
-          </div>
+          </>
         </Col>
       </Row>
     </Spin>

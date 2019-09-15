@@ -1,9 +1,5 @@
 import React from 'react';
 
-const Reports = () => (
-  <div>
-    <h2>Reports</h2>
-  </div>
-);
+const Reports = () => <h1>Reports</h1>;
 
 export default Reports;

@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import client from './app/config/apollo';
 
 import 'antd/dist/antd.css';
+import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
 const render = () => {
@@ -14,7 +15,7 @@ const render = () => {
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>,
-    document.getElementById('root')
+    document.getElementById('root'),
   );
 };
 

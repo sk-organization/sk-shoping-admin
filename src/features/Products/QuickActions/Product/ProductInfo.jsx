@@ -25,19 +25,26 @@ const ProductInfo = ({ product }) => {
       <div>
         Name: <strong>{name}</strong>
         <br />
-        Price: <strong>{price}</strong>
+        Actual Price: <strong>{price}</strong>
         <br />
         Discount: <strong>{discountPercent}</strong>
+        <br />
+        Marked Price:
+        <strong>
+          {discountPercent > 0
+            ? price + price * (discountPercent / 100)
+            : price}
+        </strong>
         <br />
         Seller Price: <strong>{sellerPrice}</strong>
         <br />
         SK Money: <strong>{returnableSKMoney}</strong>
         <br />
-        Created Date: <strong>{createdAt}</strong>
+        Created Date: <strong>{new Date(createdAt).toDateString()}</strong>
         <br />
-        Dispatch Duration: <strong>{dispatchDuration}</strong>
+        Dispatch Duration: <strong>{dispatchDuration.toLowerCase()}</strong>
         <br />
-        Delivery Duration: <strong>{deliveryDuration}</strong>
+        Delivery Duration: <strong>{deliveryDuration.toLowerCase()}</strong>
         <br />
         Category: <strong>{cName}</strong>
         <br />

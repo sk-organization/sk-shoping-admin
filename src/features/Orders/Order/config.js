@@ -30,7 +30,7 @@ const orderProduct = [
             Price: <strong>₹{info.price}</strong>
           </div>
           <div>
-            Discount Percent: <strong>{info.discountPercent} %</strong>
+            Discount Percent: <strong>{info.discountPercent}`%</strong>
           </div>
           <div>
             Category: <strong>{info.subCategory.replace('-', ' ')}</strong>

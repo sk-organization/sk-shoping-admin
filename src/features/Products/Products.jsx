@@ -10,9 +10,8 @@ import { margin } from '../../styles';
 const { Search } = Input;
 
 const style = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  marginBottom: 15,
+  textAlign: 'right',
+  marginBottom: 20,
 };
 
 const Products = ({ where = {} }) => {
@@ -37,7 +36,6 @@ const Products = ({ where = {} }) => {
     },
     client,
   });
-  console.log(products);
   const productsMapped = products.map(product => ({
     ...product,
     meta: {
@@ -91,7 +89,6 @@ const Products = ({ where = {} }) => {
   return (
     <div>
       <div style={style}>
-        <h3>Listing All Products</h3>
         <Button
           onClick={() => navigate('/products/add-product')}
           type="primary"

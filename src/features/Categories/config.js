@@ -16,7 +16,7 @@ const categoriesTable = [
     ),
   },
   {
-    title: 'Name',
+    title: 'Category',
     dataIndex: 'name',
   },
 
@@ -54,9 +54,7 @@ const categoriesTable = [
           <Menu.Item
             onClick={() =>
               navigate(
-                `/categories/add-subCategories?key=${quickActions.key}&label=${
-                  quickActions.label
-                }`,
+                `/categories/add-subCategories?key=${quickActions.key}&label=${quickActions.label}`,
               )
             }
           >

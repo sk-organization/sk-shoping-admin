@@ -7,12 +7,12 @@ const productsTable = [
   {
     title: 'Image',
     dataIndex: 'variations[0].images[0]',
-    width: '220px',
+    width: '180px',
     render: image => (
       <Avatar
         style={{ marginTop: 40, marginLeft: 20 }}
         shape="square"
-        size={130}
+        size={100}
         src={IMAGE_HOST + image}
       />
     ),
@@ -28,10 +28,17 @@ const productsTable = [
         <strong>{meta.name}</strong>
         <br />
         Product Category:
-        <strong> {meta.category.replace('-', ' ')}</strong>
+        <strong>{meta.category.replace('-', ' ')}</strong>
         <br />
-        Price:
+        Actual Price:
         <strong>{meta.price}</strong>
+        <br />
+        Marked Price:
+        <strong>
+          {meta.discountPercent > 0
+            ? meta.price + meta.price * (meta.discountPercent / 100)
+            : meta.price}
+        </strong>
         <br />
         Viewed:
         <strong>{meta.viewed}</strong>

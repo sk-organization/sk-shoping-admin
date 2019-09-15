@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Table, Spin, Button } from 'antd';
+import { Input, Table, Spin, Button, Col, Row } from 'antd';
 import { navigate } from '@reach/router';
 
 import client from '../../app/config/apollo';
 import { userColumns } from './tableConfig';
 import { FETCH_SELLERS, SEARCH_SELLERS } from './graphql/Queries';
+import { margin, align } from '../../styles';
 
 const { Search } = Input;
 
@@ -24,44 +25,44 @@ const Seller = () => {
       });
   }, []);
 
-  const style = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: 15,
-  };
-
   return (
     <div>
-      <div style={style}>
-        <h3>Listing All Sellers</h3>
-        <Button onClick={() => navigate('/add-new-seller')} type="primary">
-          Add New Seller
-        </Button>
-      </div>
+      <Row style={margin.mb15}>
+        <Col span={12}>
+          <div>
+            <Search
+              enterButton
+              placeholder="Search Sellers"
+              style={{ width: 300 }}
+              size="medium"
+              onChange={event => {
+                setLoading(true);
+                client
+                  .query({
+                    query: SEARCH_SELLERS,
+                    variables: {
+                      term: event.target.value,
+                    },
+                  })
+                  .then(res => {
+                    setLoading(false);
+                    setSellers(res.data.sellers);
+                  });
+              }}
+            />
+          </div>
+        </Col>
+        <Col span={12} style={align.right}>
+          <div>
+            <Button onClick={() => navigate('/add-new-seller')} type="primary">
+              Add New Seller
+            </Button>
+          </div>
+        </Col>
+      </Row>
+
       <br />
 
-      <div style={{ textAlign: 'right' }}>
-        <Search
-          enterButton
-          placeholder="Search Sellers"
-          style={{ width: 250 }}
-          size="medium"
-          onChange={event => {
-            setLoading(true);
-            client
-              .query({
-                query: SEARCH_SELLERS,
-                variables: {
-                  term: event.target.value,
-                },
-              })
-              .then(res => {
-                setLoading(false);
-                setSellers(res.data.sellers);
-              });
-          }}
-        />
-      </div>
       <br />
       <br />
       <Spin spinning={loading} size="large">

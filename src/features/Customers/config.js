@@ -12,7 +12,7 @@ const customersTable = [
     title: 'Image',
     dataIndex: 'image',
     render: image => (
-      <Avatar shape="circle" size={50} src={IMAGE_HOST + image} />
+      <Avatar shape="circle" size={60} src={IMAGE_HOST + image} />
     ),
   },
 
@@ -53,19 +53,26 @@ const customersTable = [
     dataIndex: 'userLocationInfo',
     render: location => (
       <div>
-        <div>
-          <strong>Address: </strong>
-          {`${location.address1 || ''},
+        {location.address1 ||
+          (location.address2 && (
+            <div>
+              <strong>Address: </strong>
+              {`${location.address1 || ''},
           ${location.address2 || ''}`}
-        </div>
-        <div>
-          <strong>City: </strong>
-          {location.city}
-        </div>
-        <div>
-          <strong>ZippCode: </strong>
-          {location.zipCode}
-        </div>
+            </div>
+          ))}
+        {location.city && (
+          <div>
+            <strong>City: </strong>
+            {location.city}
+          </div>
+        )}
+        {location.zipCode && (
+          <div>
+            <strong>ZippCode: </strong>
+            {location.zipCode}
+          </div>
+        )}
       </div>
     ),
   },

@@ -71,7 +71,6 @@ const Customer = props => {
       <Row gutter={10}>
         <Col span={6}>
           <h3>User Info</h3>
-          <Info />
           <Info label="Name" value={name} />
           <Info label="Email" value={email} />
           <Info label="Phone" value={phone} />
@@ -79,6 +78,7 @@ const Customer = props => {
           {user.country && <Info label="Country" value={country} />}
 
           <Info label="Gender" value={gender} />
+          <br />
 
           {Object.keys(location)[0] && <h3>Location Info</h3>}
 

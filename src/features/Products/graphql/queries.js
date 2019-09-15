@@ -6,6 +6,7 @@ const products = gql`
       id
       name
       price
+      discountPercent
       createdAt
       updatedAt
       description

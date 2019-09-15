@@ -20,7 +20,7 @@ const CarouselSlider = ({ images }) => {
     );
   });
   return (
-    <Carousel effect="fade" autoplay autoplaySpeed={2000}>
+    <Carousel effect="scrollx" autoplay autoplaySpeed={2000}>
       {imageList}
     </Carousel>
   );

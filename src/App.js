@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import React, { useState } from 'react';
 import { Layout, PageHeader } from 'antd';
 import { Router, createHistory, Location } from '@reach/router';
@@ -24,8 +25,13 @@ import Customers from './features/Customers/Customers';
 import Customer from './features/Customers/Customer/Customer';
 import Settings from './features/Settings/Settings';
 import Carousel from './features/Settings/Carousel';
-import PrivacyPolicy from './features/Settings/PrivacyPolicy';
 import Reports from './features/Reports/Reports';
+import Frenchise from './features/Reports/Frenchise/Frenchise';
+import Sales from './features/Reports/Sales/Sales';
+import CustomersReport from './features/Reports/Customer/Customer';
+import ProductsReport from './features/Reports/Product/Product';
+import TermAndCondition from './features/Policy/Term&Condition';
+import Privacy from './features/Policy/Privacy';
 
 const { Content } = Layout;
 
@@ -75,35 +81,52 @@ const App = () => {
         <PageHeader className={c.PageHeader} title={title} onBack={goBack} />
         <Content className={c.Content}>
           <PosedRouter>
+            {/* Dashboard Sections */}
             <Dashboard path="/" />
 
+            {/* Product Sections */}
             <Products path="/products" />
             <Product path="/product/:id" />
             <AddProducts path="/products/add-product" />
+            <Product path="/reports/product" />
+            <AddProducts path="/products/:id" />
 
+            {/* Oreders Sections */}
             <Orders path="/orders" />
+            <Order path="/order/:id" />
 
+            {/* Categories & SubCategories Sections */}
             <Categories path="/categories" />
             <AddCategories path="/categories/add-categories" />
             <SubCategories path="/sub-categories" />
             <AddSubCategories path="/categories/add-subCategories" />
 
+            {/* Resellers Or Frenchise Sections */}
             <Reseller path="/reseller/:id" />
             <Resellers path="/resellers" />
 
+            {/* Sellers Sections */}
             <Seller path="/seller/:id" />
             <Sellers path="/sellers" />
 
-            <Reports path="/reports" />
-
-            <Settings path="/settings" />
-            <Carousel path="/carousel" />
-            <PrivacyPolicy path="/privacy-policy" />
-
-            <Order path="/order/:id" />
-            <AddProducts path="/products/:id" />
+            {/* Customer Sections */}
             <Customers path="/customers" />
             <Customer path="/customer/:id" />
+
+            {/* Reports Sections */}
+            <Reports path="/reports" />
+            <CustomersReport path="/reports/customer" />
+            <ProductsReport path="/reports/product" />
+            <Frenchise path="/reports/frenchise" />
+            <Sales path="/reports/sales" />
+
+            {/* Privacy Policy Sections */}
+            <TermAndCondition path="/t&c" />
+            <Privacy path="/privacy" />
+
+            {/* Settings Sections */}
+            <Settings path="/settings" />
+            <Carousel path="/carousel" />
           </PosedRouter>
         </Content>
       </Layout>

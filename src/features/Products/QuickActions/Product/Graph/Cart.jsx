@@ -16,9 +16,9 @@ const Cart = ({ data }) => {
               hoverBackgroundColor: '#03c2fc',
               pointBorderColor: '#03c2fc',
               label: 'Cart Graph',
-              data: [10, 20, 50, 80, 100]
-            }
-          ]
+              data: [10, 20, 50, 80, 100],
+            },
+          ],
         }}
       />
     </div>

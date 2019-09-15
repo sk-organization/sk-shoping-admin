@@ -1,8 +1,11 @@
 import gql from 'graphql-tag';
 
 const orders = gql`
-  query($where: OrderWhereInput!) {
-    orders(where: $where) {
+  query(
+    $where: OrderWhereInput!
+    $orderBy: OrderOrderByInput = createdAt_DESC
+  ) {
+    orders(where: $where, orderBy: $orderBy) {
       id
       status
       createdAt
@@ -12,6 +15,8 @@ const orders = gql`
         name
         createdAt
       }
+      total
+      totalProducts
       products {
         product {
           price

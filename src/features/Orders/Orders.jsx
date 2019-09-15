@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Table } from 'antd';
 import { navigate } from '@reach/router';
 import { useQuery } from '@apollo/react-hooks';
@@ -8,7 +7,6 @@ import { ordersTable } from './config';
 import client from '../../app/config/apollo';
 
 const Orders = ({ where = {} }) => {
-  console.log(where);
   const { data } = useQuery(query.orders, {
     variables: {
       where,
@@ -19,22 +17,11 @@ const Orders = ({ where = {} }) => {
 
   const { orders = [] } = data;
 
+  console.log(orders.map(order => order.totalProducts));
+
   const ordersMapped = orders.map((order, index) => {
     const { createdAt, orderBy } = order;
     const { name, image } = orderBy;
-
-    let orderTotal = 0;
-    let totalProducts = 0;
-    order.products.forEach(product => {
-      let totalQuantity = 0;
-      totalProducts += 1;
-      product.selectedVariations.forEach(selectedVariation => {
-        selectedVariation.sizes.forEach(size => {
-          totalQuantity += size.quantity;
-        });
-      });
-      orderTotal += totalQuantity * product.product.price;
-    });
 
     const addDays = (date, days) => {
       date.setDate(date.getDate() + days);
@@ -49,21 +36,19 @@ const Orders = ({ where = {} }) => {
       },
       deliveryDate: addDays(new Date(order.createdAt), 7).toDateString(),
       image,
-      totalProducts,
       customerName: name,
       orderDate: new Date(createdAt).toDateString(),
-      orderTotal: `₹ ${orderTotal}`,
     };
   });
 
   return (
     <div>
-      <h3>All Orders</h3>
       <Table
         onRowClick={order => navigate(`/order/${order.id}`)}
         key={order => order.id}
         dataSource={ordersMapped}
         columns={ordersTable}
+        onChange={console.log('clicked')}
       />
     </div>
   );

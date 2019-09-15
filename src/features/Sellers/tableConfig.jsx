@@ -6,7 +6,7 @@ export const productColumns = [
   {
     title: 'Image',
     dataIndex: 'variations',
-    key: 'imagkfjaksd',
+    key: 'imagedfsdf',
     render: variations => <Avatar src={IMAGE_HOST + variations[0].images[0]} />,
   },
   {

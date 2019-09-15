@@ -5,7 +5,7 @@ import { subCategoriesTable } from './config';
 
 import { query } from './graphql';
 import client from '../../../app/config/apollo';
-import { align, margin } from '../../../styles';
+import { align, margin, component } from '../../../styles';
 
 const { Search } = Input;
 
@@ -76,19 +76,19 @@ const SubCategories = () => {
     <div>
       <Row style={margin.mb15}>
         <Col span={12}>
-          <Button onClick={addNewSubCategory} type="primary">
-            <Icon type="plus" />
-            Add New
-          </Button>
-        </Col>
-        <Col span={12} style={align.alignRight}>
           <Search
             autoComplete="on"
-            style={styles.search}
+            style={component.search}
             placeholder="Search Sub Category"
             enterButton="Search"
             onChange={searchSubCategories}
           />
+        </Col>
+        <Col span={12} style={align.right}>
+          <Button onClick={addNewSubCategory} type="primary">
+            <Icon type="plus" />
+            Add New
+          </Button>
         </Col>
       </Row>
       <Table
