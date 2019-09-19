@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Card, Row, Col, Tabs, Icon, DatePicker } from 'antd';
+import { Card, Row, Col, Tabs, Icon, DatePicker, Breadcrumb } from 'antd';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
 
@@ -21,6 +21,7 @@ const { RangePicker } = DatePicker;
 
 const dateFormat = 'YY/MM/DD';
 
+// eslint-disable-next-line arrow-body-style
 const Dashboard = () => {
   return (
     <div>

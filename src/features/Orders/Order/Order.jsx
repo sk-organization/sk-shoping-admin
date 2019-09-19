@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, Icon, Table, Spin, Steps } from 'antd';
+import { differenceInBusinessDays } from 'date-fns';
 import { query } from '../graphql';
 import Customer from './BasicInfo/Customer';
 import { useData } from '../../hooks';
@@ -20,7 +21,7 @@ const OrderInfo = props => {
   });
 
   if (error) {
-    return <h1>Error........</h1>;
+    return <h1>Error...</h1>;
   }
 
   const productsMapped =
@@ -69,6 +70,23 @@ const OrderInfo = props => {
     window.print();
   };
 
+  let step = 0;
+
+  const difference = differenceInBusinessDays(
+    new Date(order.createdAt),
+    new Date(),
+  );
+
+  if (difference === -1) {
+    step = 1;
+  } else if (difference === -2) {
+    step = 2;
+  }
+
+  if (order.status === 'RECEIVED') {
+    step = 3;
+  }
+  console.log(order);
   return (
     <Spin spinning={loading}>
       <>
@@ -105,15 +123,21 @@ const OrderInfo = props => {
           <Billing billing={order.paymentMethod} status={order.status} />
         </Col>
       </Row>
-
-      <div className="steps" style={margin.mb30}>
-        <Steps size="small" direction="horizontal" current={1}>
-          <Step title="Finished" description="This is a description." />
-          <Step title="In Progress" description="This is a description." />
-          <Step title="Dispatch" description="This is a description." />
-          <Step title="Waiting" description="This is a description." />
+      <br />
+      <br />
+      <br />
+      <div className="progress">
+        <Steps size="small" progressDot current={step}>
+          <Step title="Order And Approved" description="Sun 17-Sep-2019" />
+          <Step title="Packed" description="Sun 17-Sep-2019" />
+          <Step title="Shipped" description="Tue 19-Sep-2019" />
+          <Step
+            title="Deliver"
+            description="Expected by Wed, 21st-Sep-2019 shipment yet to be deliver"
+          />
         </Steps>
       </div>
+      <br />
       <Table
         loading={loading}
         dataSource={productsMapped}

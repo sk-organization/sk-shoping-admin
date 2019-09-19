@@ -28,10 +28,15 @@ import Carousel from './features/Settings/Carousel';
 import Reports from './features/Reports/Reports';
 import Frenchise from './features/Reports/Frenchise/Frenchise';
 import Sales from './features/Reports/Sales/Sales';
-import CustomersReport from './features/Reports/Customer/Customer';
-import ProductsReport from './features/Reports/Product/Product';
 import TermAndCondition from './features/Policy/Term&Condition';
 import Privacy from './features/Policy/Privacy';
+import BreadcrumbGroup from './BreadCrumb';
+import Admins from './features/ManageAdmin/Admins/Admins';
+import ManageRoles from './features/ManageAdmin/ManageRoles/ManageRoles';
+import AddAdmins from './features/ManageAdmin/Admins/AddAdmins/AddAdmins';
+import AddAdminType from './features/ManageAdmin/ManageRoles/AddAdminType/AddAdminType';
+import CustomerLoyalty from './features/Reports/CustomerLoyalty/CustomerLoyalty';
+import ProductLoyalty from './features/Reports/ProductLoyalty/ProductLoyalty';
 
 const { Content } = Layout;
 
@@ -79,6 +84,9 @@ const App = () => {
       <Sidebar setTitle={setTitle} />
       <Layout>
         <PageHeader className={c.PageHeader} title={title} onBack={goBack} />
+        {/* <p>
+          <BreadcrumbGroup />
+        </p> */}
         <Content className={c.Content}>
           <PosedRouter>
             {/* Dashboard Sections */}
@@ -115,10 +123,12 @@ const App = () => {
 
             {/* Reports Sections */}
             <Reports path="/reports" />
-            <CustomersReport path="/reports/customer" />
-            <ProductsReport path="/reports/product" />
             <Frenchise path="/reports/frenchise" />
             <Sales path="/reports/sales" />
+
+            {/* Loayal Customers */}
+            <CustomerLoyalty path="/reports/customer-loyalty" />
+            <ProductLoyalty path="/reports/product-loyalty" />
 
             {/* Privacy Policy Sections */}
             <TermAndCondition path="/t&c" />
@@ -127,6 +137,13 @@ const App = () => {
             {/* Settings Sections */}
             <Settings path="/settings" />
             <Carousel path="/carousel" />
+
+            {/* Admin Sections */}
+            <Admins path="/admin/admins" />
+            <AddAdmins path="/admin/add-admins" />
+
+            <ManageRoles path="/admin/manage-roles" />
+            <AddAdminType path="/admin/add-admin-type" />
           </PosedRouter>
         </Content>
       </Layout>

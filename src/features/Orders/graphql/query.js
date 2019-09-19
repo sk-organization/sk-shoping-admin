@@ -42,7 +42,11 @@ const order = gql`
         country
         phone
         createdAt
+        gender
+        skMoney
       }
+      status
+      createdAt
       paymentMethod
       shippingAddress {
         city
@@ -66,6 +70,12 @@ const order = gql`
           }
           seller {
             shopName
+            shopLocation {
+              city
+              zipCode
+              address1
+              address2
+            }
           }
           subCategory {
             name

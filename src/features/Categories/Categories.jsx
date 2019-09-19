@@ -11,6 +11,7 @@ const { Search } = Input;
 
 const Categories = () => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [categories, setCategories] = useState([]);
 
   const fetchCategories = async where => {
@@ -22,14 +23,19 @@ const Categories = () => {
           where,
         },
       });
+
       setCategories(res.data.categories);
       setLoading(false);
-    } catch (error) {}
+    } catch (error) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
     fetchCategories();
   }, []);
+
+  if (error) return <div>Server Error!</div>;
 
   const addNewCategory = () => navigate('/categories/add-categories');
 
@@ -79,8 +85,7 @@ const Categories = () => {
         </Col>
         <Col span={12} style={align.right}>
           <Button onClick={addNewCategory} type="primary">
-            <Icon type="plus" />
-            Add New
+            Add New Categories
           </Button>
         </Col>
       </Row>

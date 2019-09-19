@@ -59,33 +59,48 @@ const Sidebar = () => {
 
         <Menu.Item onClick={() => navigate('/resellers')}>
           <Icon type="usergroup-add" />
-          <span>Resellers</span>
+          <span>Frenchise</span>
         </Menu.Item>
 
         <Menu.Item onClick={() => navigate('/customers')}>
           <Icon type="user" />
           <span>Customers</span>
         </Menu.Item>
-
         <SubMenu
           title={
             <span>
-              <Icon type="profile" />
+              <Icon type="file-done" />
               <span>Reports</span>
             </span>
           }
         >
-          <Menu.Item onClick={() => navigate('/reports/customer')}>
-            <Icon type="right-circle" />
-            <span>Customers</span>
+          <Menu.Item onClick={() => navigate('/reports')}>
+            <Icon type="profile" />
+            <span> All Reports</span>
           </Menu.Item>
 
-          <Menu.Item onClick={() => navigate('/reports/product')}>
-            <Icon type="right-circle" />
+          <Menu.Item onClick={() => navigate('/reports/customer-loyalty')}>
+            <Icon type="profile" />
+            <span>Customer</span>
+          </Menu.Item>
+          <Menu.Item onClick={() => navigate('/reports/product-loyalty')}>
+            <Icon type="profile" />
             <span>Product</span>
           </Menu.Item>
+          <Menu.Item onClick={() => navigate('reports/orders-loyalty')}>
+            <Icon type="profile" />
+            <span>Orders</span>
+          </Menu.Item>
+        </SubMenu>
 
-          <Menu.Item onClick={() => navigate('/reports/frenchise')}>
+        {/* <Menu.Item
+            onClick={() => navigate('/reports/products-purchased-report')}
+          >
+            <Icon type="right-circle" />
+            <span>ProductsPurchasedReport</span>
+          </Menu.Item> */}
+
+        {/* <Menu.Item onClick={() => navigate('/reports/frenchise')}>
             <Icon type="right-circle" />
             <span>Frenchise</span>
           </Menu.Item>
@@ -93,8 +108,7 @@ const Sidebar = () => {
           <Menu.Item onClick={() => navigate('/reports/sales')}>
             <Icon type="right-circle" />
             <span>Sales</span>
-          </Menu.Item>
-        </SubMenu>
+          </Menu.Item> */}
 
         <SubMenu
           title={
@@ -126,6 +140,24 @@ const Sidebar = () => {
           <Menu.Item onClick={() => navigate('/carousel')}>
             <Icon type="right-circle" />
             <span>Carousel</span>
+          </Menu.Item>
+        </SubMenu>
+
+        <SubMenu
+          title={
+            <span>
+              <Icon type="usergroup-add" />
+              <span>Manage Admins</span>
+            </span>
+          }
+        >
+          <Menu.Item onClick={() => navigate('/admin/admins')}>
+            <Icon type="right-circle" />
+            <span>Admins</span>
+          </Menu.Item>
+          <Menu.Item onClick={() => navigate('/admin/manage-roles')}>
+            <Icon type="right-circle" />
+            <span>Manage Roles</span>
           </Menu.Item>
         </SubMenu>
       </Menu>

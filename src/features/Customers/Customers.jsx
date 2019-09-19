@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Search from 'antd/lib/transfer/search';
 import { navigate } from '@reach/router';
-import { Button, Table, Row, Col } from 'antd';
+import { Button, Table, Row, Col, Input } from 'antd';
 import { query } from './graphql';
 import { customersTable } from './config';
 import client from '../../app/config/apollo';
 import { align, margin, component } from '../../styles';
 
+const { Search } = Input;
+
 const Customers = () => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [users, setUsers] = useState([]);
 
   const fetchUsers = async () => {
@@ -19,12 +21,16 @@ const Customers = () => {
       });
       setUsers(res.data.users);
       setLoading(false);
-    } catch (error) {}
+    } catch (error) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  if (error) return <div>Server Error...</div>;
 
   console.log(users);
 
@@ -51,10 +57,9 @@ const Customers = () => {
       <Row style={margin.mb15}>
         <Col span={12}>
           <Search
-            style={component.search}
-            placeholder="search customer"
-            enterButton="Search"
-            size="small"
+            enterButton
+            placeholder="Search Customer"
+            style={{ width: 300 }}
           />
         </Col>
         <Col span={12} style={align.right}>
@@ -68,7 +73,7 @@ const Customers = () => {
           </div>
         </Col>
       </Row>
-
+      <br />
       <Table
         onRow={user => ({
           onClick: () => navigate(`/customer/${user.id}`),

@@ -4,15 +4,12 @@ import { Input, Table, Spin } from 'antd';
 
 import client from '../../app/config/apollo';
 import { resellersColumns } from './tableConfig';
-import {
-  FETCH_RESELLERS,
-  SEARCH_RESELLERS,
-} from './Queries/Queries';
+import { FETCH_RESELLERS, SEARCH_RESELLERS } from './Queries/Queries';
 
 const { Search } = Input;
 
 const Reseller = () => {
-  const [resellers, setResellers] = useState([]);
+  const [resellers, error, setResellers] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -26,6 +23,8 @@ const Reseller = () => {
         setResellers(res.data.resellers);
       });
   }, []);
+
+  if (error) return <div>Server Error...</div>;
 
   return (
     <div>

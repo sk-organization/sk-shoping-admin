@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'antd';
+import { Col, Row } from 'antd';
 import { text } from '../../../../styles';
 
 const Customer = ({ customer = {} }) => {
@@ -9,15 +9,18 @@ const Customer = ({ customer = {} }) => {
       <Row>
         <Col span={6}>
           {customer.name && <div>Name</div>}
-          {customer.phone && <div>Phone</div>}
           {customer.email && <div>Email</div>}
+          {customer.phone && <div>Phone</div>}
+          {customer.gender && <div>Gender</div>}
         </Col>
         <Col>
           <div style={text.strong}>{customer.name}</div>
-          <div style={text.strong}>{customer.phone}</div>
           <div style={text.strong}>{customer.email}</div>
+          <div style={text.strong}>{customer.phone}</div>
+          <div style={text.strong}>{customer.gender}</div>
         </Col>
       </Row>
+      {/* <div style={text.strong}>{customer.skMoney}</div> */}
     </>
   );
 };

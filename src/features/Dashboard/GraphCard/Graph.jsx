@@ -207,7 +207,6 @@ const Graph = () => {
               </div>
               <br />
 
-              <Progress style={{ fontSize: 20 }} percent={50} status="active" />
               <div>
                 <Line
                   options={{

@@ -7,8 +7,8 @@ const Billing = ({ billing, status }) => {
     <>
       <h3>Billing info</h3>
       <Row>
-        <Col span={12}>
-          {billing && <div>Payment Method</div>}
+        <Col span={6}>
+          {billing && <div>Payment</div>}
           {status && <div>Status</div>}
         </Col>
         <Col>

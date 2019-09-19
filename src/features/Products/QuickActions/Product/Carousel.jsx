@@ -3,6 +3,7 @@ import { Carousel } from 'antd';
 import { IMAGE_HOST } from '../../../../app/config/constants';
 
 const CarouselSlider = ({ images }) => {
+  // eslint-disable-next-line arrow-body-style
   const imageList = images.map(image => {
     return (
       <div>

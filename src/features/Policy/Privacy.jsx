@@ -8,6 +8,7 @@ import CkEditor from '../includes/Form/CkEditor';
 
 const PrivacyPolicy = () => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [privacyPolicy, setPrivacyPolicy] = useState('');
 
   useEffect(() => {
@@ -16,6 +17,7 @@ const PrivacyPolicy = () => {
       const { data } = res;
       setPrivacyPolicy(data.p_and_p);
       setLoading(false);
+      setError(true);
     });
   }, []);
 
@@ -30,6 +32,7 @@ const PrivacyPolicy = () => {
       });
   };
 
+  if (error) return <div>Server Error...</div>;
   if (loading) return <div>Loading...</div>;
 
   return (

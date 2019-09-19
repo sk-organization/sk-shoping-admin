@@ -7,6 +7,7 @@ import CkEditor from '../includes/Form/CkEditor';
 
 const TermsAndConditions = () => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [generalPolicy, setGeneralPolicy] = useState('');
 
   useEffect(() => {
@@ -15,6 +16,7 @@ const TermsAndConditions = () => {
       const { data } = res;
       setGeneralPolicy(data.t_and_c);
       setLoading(false);
+      setError(true);
     });
   }, []);
 
@@ -29,6 +31,7 @@ const TermsAndConditions = () => {
       });
   };
 
+  if (error) return <div>Server Error...</div>;
   if (loading) return <div>Loading ...</div>;
 
   return (

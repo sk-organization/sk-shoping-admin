@@ -9,16 +9,9 @@ import { align, margin, component } from '../../../styles';
 
 const { Search } = Input;
 
-const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: 15,
-  },
-};
-
 const SubCategories = () => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [subCategories, setSubCategories] = useState([]);
 
   const fetchSubCategories = async where => {
@@ -32,7 +25,9 @@ const SubCategories = () => {
       });
       setSubCategories(res.data.subCategories);
       setLoading(false);
-    } catch (error) {}
+    } catch (error) {
+      setError(true);
+    }
   };
 
   const searchSubCategories = event => {
@@ -63,6 +58,8 @@ const SubCategories = () => {
     fetchSubCategories();
   }, []);
 
+  if (error) return <div>Server Error...</div>;
+
   const addNewSubCategory = () => navigate('/categories/add-subCategories');
 
   const subCategoriesMapped = subCategories.map(subCategory => ({
@@ -86,12 +83,12 @@ const SubCategories = () => {
         </Col>
         <Col span={12} style={align.right}>
           <Button onClick={addNewSubCategory} type="primary">
-            <Icon type="plus" />
-            Add New
+            Add New SubCategories
           </Button>
         </Col>
       </Row>
       <Table
+        // onRowClick={() => navigate(`/sub-categories/${subCategory.name}`)}
         loading={loading}
         className="_categories--table"
         rowKey={subCategory => subCategory.id}

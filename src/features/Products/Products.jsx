@@ -15,20 +15,24 @@ const style = {
 };
 
 const Products = ({ where = {} }) => {
-  const {
-    data: { categories = [] },
-  } = useQuery(query.categories, {
-    client,
-  });
+  const { data: cData = {}, error: cError, loading: cLoading } = useQuery(
+    query.categories,
+    {
+      client,
+    },
+  );
+
+  const { data: sData = {}, error: sError, loading: sLoading } = useQuery(
+    query.subCategories,
+    {
+      client,
+    },
+  );
 
   const {
-    data: { subCategories = [] },
-  } = useQuery(query.subCategories, {
-    client,
-  });
-
-  const {
-    data: { products = [] },
+    data: pData = {},
+    error: pError,
+    loading: pLoading,
     refetch: fetchProducts,
   } = useQuery(query.products, {
     variables: {
@@ -36,6 +40,13 @@ const Products = ({ where = {} }) => {
     },
     client,
   });
+
+  if (cError || sError || pError) return <div>Server Error...</div>;
+
+  const { categories = [] } = cData;
+  const { subCategories = [] } = sData;
+  const { products = [] } = pData;
+
   const productsMapped = products.map(product => ({
     ...product,
     meta: {
@@ -132,6 +143,7 @@ const Products = ({ where = {} }) => {
         <br />
       </div>
       <Table
+        loading={cLoading || sLoading || pLoading}
         className="_products--table"
         rowKey={product => product.id}
         dataSource={productsMapped}

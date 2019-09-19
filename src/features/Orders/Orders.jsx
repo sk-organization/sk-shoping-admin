@@ -7,7 +7,7 @@ import { ordersTable } from './config';
 import client from '../../app/config/apollo';
 
 const Orders = ({ where = {} }) => {
-  const { data } = useQuery(query.orders, {
+  const { data = {}, error, loading } = useQuery(query.orders, {
     variables: {
       where,
     },
@@ -15,9 +15,9 @@ const Orders = ({ where = {} }) => {
     pollInterval: 500,
   });
 
-  const { orders = [] } = data;
+  if (error) return <div>Server Error...</div>;
 
-  console.log(orders.map(order => order.totalProducts));
+  const { orders = [] } = data;
 
   const ordersMapped = orders.map((order, index) => {
     const { createdAt, orderBy } = order;
@@ -34,7 +34,7 @@ const Orders = ({ where = {} }) => {
       actions: {
         id: order.id,
       },
-      deliveryDate: addDays(new Date(order.createdAt), 7).toDateString(),
+      deliveryDate: addDays(new Date(order.createdAt), 6).toDateString(),
       image,
       customerName: name,
       orderDate: new Date(createdAt).toDateString(),
@@ -44,6 +44,7 @@ const Orders = ({ where = {} }) => {
   return (
     <div>
       <Table
+        loading={loading}
         onRowClick={order => navigate(`/order/${order.id}`)}
         key={order => order.id}
         dataSource={ordersMapped}

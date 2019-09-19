@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Icon, Row, Col, Avatar } from 'antd';
+import { Tabs, Icon, Row, Col, Avatar, Button } from 'antd';
 import { useQuery } from '@apollo/react-hooks';
 import { Line } from 'react-chartjs-2';
 import { IMAGE_HOST } from '../../../app/config/constants';
@@ -81,6 +81,8 @@ const Customer = props => {
           <br />
 
           {Object.keys(location)[0] && <h3>Location Info</h3>}
+
+          {location.city && <Info label="City" value={location.city} />}
 
           {location.address1 && (
             <Info label="Address1" value={location.address1} />

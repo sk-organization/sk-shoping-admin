@@ -10,8 +10,9 @@ import { margin, align } from '../../styles';
 const { Search } = Input;
 
 const Seller = () => {
-  const [sellers, setSellers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [sellers, setSellers] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -22,8 +23,13 @@ const Seller = () => {
       .then(res => {
         setLoading(false);
         setSellers(res.data.sellers);
+      })
+      .catch(() => {
+        setError(true);
       });
   }, []);
+
+  if (error) return <div>Server Error...</div>;
 
   return (
     <div>
@@ -61,9 +67,6 @@ const Seller = () => {
         </Col>
       </Row>
 
-      <br />
-
-      <br />
       <br />
       <Spin spinning={loading} size="large">
         <Table
