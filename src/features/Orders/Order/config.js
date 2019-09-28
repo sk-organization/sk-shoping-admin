@@ -13,7 +13,9 @@ const orderProduct = [
     title: 'Image',
     dataIndex: 'image',
     render: image => (
-      <Avatar shape="square" size={100} src={IMAGE_HOST + image} />
+      <div className="imageHider">
+        <Avatar shape="square" size={100} src={IMAGE_HOST + image} />
+      </div>
     ),
   },
 
@@ -36,7 +38,7 @@ const orderProduct = [
             Category: <strong>{info.subCategory.replace('-', ' ')}</strong>
           </div>
           <div>
-            Shop Name: <strong>{info.shopName}</strong>{' '}
+            Sold By: <strong>{info.shopName}</strong>{' '}
           </div>
         </div>
       );
@@ -78,7 +80,7 @@ const orderProduct = [
   {
     title: 'Sub Total',
     dataIndex: 'subTotal',
-    render: subTotal => `₹ ${subTotal}`,
+    render: subTotal => `₹ ${Math.round(subTotal)}`,
   },
 ];
 

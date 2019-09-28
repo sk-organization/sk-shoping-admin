@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 // SELLER QUERY
-export const FETCH_SELLER = gql`
+const seller = gql`
   query($id: ID) {
     seller(where: { id: $id }) {
       id
@@ -47,7 +47,7 @@ export const FETCH_SELLER = gql`
   }
 `;
 
-export const FETCH_PRODUCTS = gql`
+const products = gql`
   query($where: ProductWhereInput!) {
     products(where: $where, first: 20) {
       id
@@ -73,9 +73,9 @@ export const FETCH_PRODUCTS = gql`
 `;
 
 // SELLER'S QUERY
-export const FETCH_SELLERS = gql`
-  query {
-    sellers(first: 20) {
+const sellers = gql`
+  query($where: SellerWhereInput, $skip: Int = 0, $first: Int = 2) {
+    sellers(where: $where, skip: $skip, first: $first) {
       id
       user {
         name
@@ -116,7 +116,7 @@ export const FETCH_SELLERS = gql`
   }
 `;
 
-export const SEARCH_SELLERS = gql`
+const searchSellers = gql`
   query($term: String!) {
     sellers(where: { user: { name_contains: $term } }, first: 20) {
       id
@@ -151,3 +151,5 @@ export const SEARCH_SELLERS = gql`
     }
   }
 `;
+
+export { seller, products, searchSellers, sellers };

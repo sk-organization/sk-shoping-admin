@@ -1,7 +1,9 @@
 import React from 'react';
 import { Avatar, Menu, Dropdown, Icon, Tag } from 'antd';
 import { navigate } from '@reach/router';
+import client from '../../app/config/apollo';
 import { IMAGE_HOST } from '../../app/config/constants';
+import gql from 'graphql-tag';
 
 const productsTable = [
   {
@@ -23,36 +25,53 @@ const productsTable = [
     width: '400px',
     render: meta => (
       <div>
-        <h3 style={{ color: 'Purple' }}>Product Details</h3>
-        Product Name:
-        <strong>{meta.name}</strong>
-        <br />
-        Product Category:
-        <strong>{meta.category.replace('-', ' ')}</strong>
-        <br />
-        Actual Price:
-        <strong>{meta.price}</strong>
-        <br />
-        Marked Price:
-        <strong>
-          {meta.discountPercent > 0
-            ? meta.price + meta.price * (meta.discountPercent / 100)
-            : meta.price}
+        <strong style={{ color: 'Purple', fontSize: 18 }}>
+          Product Details
         </strong>
-        <br />
-        Viewed:
-        <strong>{meta.viewed}</strong>
-        <br />
-        Tags:{' '}
-        {meta.tags.map(tag => (
-          <Tag color="purple">{tag.name}</Tag>
-        ))}
+        <div>
+          Product Name:
+          <strong>{meta.name}</strong>
+        </div>
+        <div>
+          Product Category:
+          <strong>{meta.category.replace('-', ' ')}</strong>
+        </div>
+
+        <div>
+          Actual Price:
+          <strong>{meta.price}</strong>
+        </div>
+
+        <div>
+          Marked Price:
+          <strong>
+            {meta.discountPercent > 0
+              ? meta.price + meta.price * (meta.discountPercent / 100)
+              : meta.price}
+          </strong>
+        </div>
+
+        <div>
+          Viewed:
+          <strong>{meta.viewed}</strong>
+        </div>
+        <div>
+          Tags:{' '}
+          {meta.tags.map(tag => (
+            <Tag color="purple">{tag.name}</Tag>
+          ))}
+        </div>
         <br />
         <div>
-          <h3 style={{ color: 'Green' }}>Seller&rsquo;s Details</h3>
-          Shop Name: <strong>{meta.sellerShopName}</strong>
-          <br />
-          Seller Name: <strong>{meta.seller}</strong>
+          <strong style={{ color: 'Green', fontSize: 18 }}>
+            Seller&rsquo;s Details
+          </strong>
+          <div>
+            Shop Name: <strong>{meta.sellerShopName}</strong>
+          </div>
+          <div>
+            Seller Name: <strong>{meta.seller}</strong>
+          </div>
           {/* TODO: add tags */}
         </div>
       </div>
@@ -73,20 +92,57 @@ const productsTable = [
   },
   {
     title: 'Quick Action',
-    dataIndex: 'id',
-    render: id => {
+    dataIndex: 'quickActions',
+    render: quickActions => {
       const menu = (
         <Menu>
-          <Menu.Item key="4" onClick={() => navigate(`/product/${id}`)}>
+          <Menu.Item
+            key="1"
+            onClick={() => navigate(`/product/${quickActions.id}`)}
+          >
             <Icon type="eye" />
             View Product
           </Menu.Item>
+          {quickActions.isApproved === false && (
+            <Menu.Item
+              key="2"
+              onClick={() => {
+                client
+                  .mutate({
+                    mutation: gql`
+                      mutation($id: ID!) {
+                        updateProduct(
+                          data: { isApproved: true }
+                          where: { id: $id }
+                        ) {
+                          id
+                        }
+                      }
+                    `,
+                    variables: {
+                      id: quickActions.id,
+                    },
+                  })
+                  .then(() => {
+                    // console.log('done');
+                    navigate('/products');
+                  })
+                  .catch(error => {
+                    console.error(error);
+                  });
+              }}
+            >
+              <Icon type="check" /> Approved Products
+            </Menu.Item>
+          )}
 
-          <Menu.Item key="0" onClick={() => navigate(`/edit-product/${id}`)}>
+          <Menu.Item
+            key="3"
+            onClick={() => navigate(`/edit-product/${quickActions.id}`)}
+          >
             <Icon type="edit" /> Edit Product
           </Menu.Item>
-
-          <Menu.Item key="1">
+          <Menu.Item key="4">
             <Icon type="pause-circle" /> Make Unavailable
           </Menu.Item>
           <Menu.Divider />

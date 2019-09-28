@@ -10,8 +10,6 @@ import Sidebar from './features/Sidebar/Sidebar';
 import Dashboard from './features/Dashboard/Dashboard';
 import Products from './features/Products/Products';
 import Orders from './features/Orders/Orders';
-import Resellers from './features/Resellers/Resellers';
-import Reseller from './features/Resellers/Reseller/Reseller';
 import Seller from './features/Sellers/Seller/Seller';
 import Sellers from './features/Sellers/Sellers';
 import AddProducts from './features/Products/AddProducts/AddProducts';
@@ -26,17 +24,26 @@ import Customer from './features/Customers/Customer/Customer';
 import Settings from './features/Settings/Settings';
 import Carousel from './features/Settings/Carousel';
 import Reports from './features/Reports/Reports';
-import Frenchise from './features/Reports/Frenchise/Frenchise';
+import FrenchiseReport from './features/Reports/Frenchise/FrenchiseReport';
 import Sales from './features/Reports/Sales/Sales';
 import TermAndCondition from './features/Policy/Term&Condition';
 import Privacy from './features/Policy/Privacy';
-import BreadcrumbGroup from './BreadCrumb';
 import Admins from './features/ManageAdmin/Admins/Admins';
 import ManageRoles from './features/ManageAdmin/ManageRoles/ManageRoles';
 import AddAdmins from './features/ManageAdmin/Admins/AddAdmins/AddAdmins';
 import AddAdminType from './features/ManageAdmin/ManageRoles/AddAdminType/AddAdminType';
 import CustomerLoyalty from './features/Reports/CustomerLoyalty/CustomerLoyalty';
 import ProductLoyalty from './features/Reports/ProductLoyalty/ProductLoyalty';
+import Franchises from './features/Franchises/Franchises';
+import Franchise from './features/Franchises/Franchise/Franchise';
+import AddFranchise from './features/Franchises/AddFranchise/AddFranchise';
+import OrdersReport from './features/Analytics/Orders/Orders';
+import CustomersReport from './features/Analytics/Customers/Customers';
+import CustomerReport from './features/Analytics/Customers/customer/customer';
+import OrderReport from './features/Analytics/Orders/Order/Order';
+import SearchReport from './features/Analytics/Search/Search';
+import RealTimeReports from './features/Analytics/RealTime/RealTime';
+import PurchaseFunnel from './features/Analytics/Purchase/Purchase';
 
 const { Content } = Layout;
 
@@ -109,9 +116,10 @@ const App = () => {
             <SubCategories path="/sub-categories" />
             <AddSubCategories path="/categories/add-subCategories" />
 
-            {/* Resellers Or Frenchise Sections */}
-            <Reseller path="/reseller/:id" />
-            <Resellers path="/resellers" />
+            {/* Frenchise Sections */}
+            <Franchises path="/franchises" />
+            <Franchise path="/franchise/:id" />
+            <AddFranchise path="/franchises/add-franchise" />
 
             {/* Sellers Sections */}
             <Seller path="/seller/:id" />
@@ -121,9 +129,18 @@ const App = () => {
             <Customers path="/customers" />
             <Customer path="/customer/:id" />
 
+            {/* Analytics Reports */}
+            <OrdersReport path="/analytics-reports/orders" />
+            <CustomersReport path="/analytics-reports/customers" />
+            <CustomerReport path="/customers/customer/df55df44df887d1" />
+            <OrderReport path="/orders/order/d24d9f9956df5f" />
+            <SearchReport path="analytics-reports/search" />
+            <RealTimeReports path="/analytics-reports/real-time-reports" />
+            <PurchaseFunnel path="/analytics-reports/purchase" />
+
             {/* Reports Sections */}
             <Reports path="/reports" />
-            <Frenchise path="/reports/frenchise" />
+            <FrenchiseReport path="/reports/frenchise" />
             <Sales path="/reports/sales" />
 
             {/* Loayal Customers */}

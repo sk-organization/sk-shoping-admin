@@ -36,11 +36,11 @@ const ordersTable = [
   {
     title: 'Customer Name',
     dataIndex: 'customerName',
-    sorter: true,
+    // sorter: true,
     width: '20%',
   },
   {
-    title: 'Total Products',
+    title: 'Quantity',
     dataIndex: 'totalProducts',
   },
   {
@@ -63,10 +63,12 @@ const ordersTable = [
     dataIndex: 'status',
     filters: [
       { text: 'PENDING', value: 'PENDING' },
-      { text: 'RECIEVED', value: 'RECIEVED' },
+      { text: 'RECIEVED', value: 'RECEIVED' },
       { text: 'CANCELLED', value: 'CANCELLED' },
-      { text: 'FAIL', value: 'FAIL' },
+      { text: 'RETURNED', value: 'RETURNED' },
+      { text: 'FAIL', value: 'FAILED' },
     ],
+    filterMultiple: false,
     width: '15%',
     render: status => (
       <Tag color={statusMapping[status].color}>

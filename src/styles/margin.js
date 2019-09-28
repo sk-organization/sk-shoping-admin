@@ -69,4 +69,7 @@ export default {
   ml15: {
     marginLeft: 15,
   },
+  ml30: {
+    marginLeft: 30,
+  },
 };

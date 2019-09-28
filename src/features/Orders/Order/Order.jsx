@@ -67,6 +67,11 @@ const OrderInfo = props => {
     });
 
   const printOrder = () => {
+    // const printContent = document.getElementById('printable').innerHTML;
+    // const originalContent = document.body.innerHTML;
+    // document.body.innerHTML = printContent;
+    // window.print();
+    // document.body.innerHTML = originalContent;
     window.print();
   };
 
@@ -86,14 +91,16 @@ const OrderInfo = props => {
   if (order.status === 'RECEIVED') {
     step = 3;
   }
+
   console.log(order);
+
   return (
     <Spin spinning={loading}>
       <>
         <Row span={10}>
           <Col span={12}>
             <h3>
-              Order ID# <strong>{order.id}</strong>{' '}
+              Order Id: <strong>{order.id}</strong>{' '}
             </h3>
           </Col>
           <Col span={12}>
@@ -106,7 +113,9 @@ const OrderInfo = props => {
                 fontWeight: '400',
               }}
             >
-              <Icon onClick={printOrder} title="Print" type="printer" />
+              <div className="printHide">
+                <Icon onClick={printOrder} title="Print" type="printer" />
+              </div>
             </div>
           </Col>
         </Row>

@@ -4,7 +4,7 @@ import { IMAGE_HOST } from '../../app/config/constants';
 
 const customersTable = [
   {
-    title: 'SR',
+    title: 'S.N',
     dataIndex: 'sn',
   },
 
@@ -12,7 +12,9 @@ const customersTable = [
     title: 'Image',
     dataIndex: 'image',
     render: image => (
-      <Avatar shape="circle" size={60} src={IMAGE_HOST + image} />
+      <div>
+        <Avatar shape="circle" size={60} src={IMAGE_HOST + image} />
+      </div>
     ),
   },
 
@@ -20,31 +22,27 @@ const customersTable = [
     title: 'Personal Info',
     dataIndex: 'userInfo',
     render: user => (
-      <>
-        <>
+      <div>
+        <div>
           <strong>Name: </strong> {user.name}
-        </>
-        <br />
-        <>
+        </div>
+        <div>
           <strong>Email: </strong>
           {user.email}
-        </>
-        <br />
-        <>
+        </div>
+        <div>
           <strong>Phone: </strong>
           {user.phone}
-        </>
-        <br />
-        <>
+        </div>
+        {/* <div>
           <strong>Country: </strong>
           {user.country}
-        </>
-        <br />
-        <>
+        </div>
+        <div>
           <strong>Gender: </strong>
           {user.gender}
-        </>
-      </>
+        </div> */}
+      </div>
     ),
   },
 

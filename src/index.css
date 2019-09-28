@@ -45,11 +45,18 @@ tr:hover {
 
 @media print {
   .ant-layout-sider,
-  .ant-row,
+  /* .ant-row, */
   .ant-page-header-back-button,
+  .data-icon,
+  .anticon .anticon-printer,
+  th:nth-child(2),
+  td:nth-child(2),
   .progress,
+  .printHide,
+  .imageHider,
   hr,
   .steps,
+  title,
   .ant-layout-sider-has-trigger {
     display: none;
   }

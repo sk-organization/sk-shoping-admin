@@ -23,37 +23,52 @@ const ProductInfo = ({ product }) => {
     <div>
       <h2>Product Info</h2>
       <div>
-        Name: <strong>{name}</strong>
+        <div>
+          Name: <strong>{name}</strong>
+        </div>
+        <div>
+          Actual Price: <strong>{price}</strong>
+        </div>
+        <div>
+          Discount: <strong>{discountPercent}</strong>
+        </div>
+        <div>
+          Marked Price:
+          <strong>
+            {discountPercent > 0
+              ? price + price * (discountPercent / 100)
+              : price}
+          </strong>
+        </div>
+
+        <div>
+          Seller Price: <strong>{sellerPrice}</strong>
+        </div>
+        <div>
+          SK Money: <strong>{returnableSKMoney}</strong>
+        </div>
+        <div>
+          Created Date: <strong>{new Date(createdAt).toDateString()}</strong>
+        </div>
+        <div>
+          Dispatch Duration: <strong>{dispatchDuration.toLowerCase()}</strong>
+        </div>
+        <div>
+          Delivery Duration: <strong>{deliveryDuration.toLowerCase()}</strong>
+        </div>
+        <div>
+          Category: <strong>{cName}</strong>
+        </div>
+        <div>
+          Sub Category: <strong>{sName}</strong>
+        </div>
+        <div>
+          Tags:{' '}
+          {tags.map(tag => (
+            <Tag color="purple">{tag.name}</Tag>
+          ))}
+        </div>
         <br />
-        Actual Price: <strong>{price}</strong>
-        <br />
-        Discount: <strong>{discountPercent}</strong>
-        <br />
-        Marked Price:
-        <strong>
-          {discountPercent > 0
-            ? price + price * (discountPercent / 100)
-            : price}
-        </strong>
-        <br />
-        Seller Price: <strong>{sellerPrice}</strong>
-        <br />
-        SK Money: <strong>{returnableSKMoney}</strong>
-        <br />
-        Created Date: <strong>{new Date(createdAt).toDateString()}</strong>
-        <br />
-        Dispatch Duration: <strong>{dispatchDuration.toLowerCase()}</strong>
-        <br />
-        Delivery Duration: <strong>{deliveryDuration.toLowerCase()}</strong>
-        <br />
-        Category: <strong>{cName}</strong>
-        <br />
-        Sub Category: <strong>{sName}</strong>
-        <br />
-        Tags:{' '}
-        {tags.map(tag => (
-          <Tag color="purple">{tag.name}</Tag>
-        ))}
       </div>
     </div>
   );

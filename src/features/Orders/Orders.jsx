@@ -1,23 +1,73 @@
-import React from 'react';
-import { Table } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Table, Dropdown, Menu, Icon } from 'antd';
 import { navigate } from '@reach/router';
-import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import { query } from './graphql';
 import { ordersTable } from './config';
 import client from '../../app/config/apollo';
 
+const DATA_PER_PAGE = 8;
+
 const Orders = ({ where = {} }) => {
-  const { data = {}, error, loading } = useQuery(query.orders, {
-    variables: {
-      where,
-    },
-    client,
-    pollInterval: 500,
-  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [pagination, setPagination] = useState({ pageSize: DATA_PER_PAGE });
+  const [orders, setOrders] = useState([]);
+
+  const fetchTotal = async (where = {}) => {
+    const { data } = await client.query({
+      query: gql`
+        query($where: OrderWhereInput) {
+          totalOrders(where: $where)
+        }
+      `,
+      variables: {
+        where,
+      },
+    });
+    setPagination({ ...pagination, total: data.totalOrders });
+  };
+
+  const fetchOrders = async (
+    queryWhere = where || {},
+    skip,
+    first = DATA_PER_PAGE,
+  ) => {
+    try {
+      setLoading(true);
+      const { data } = await client.query({
+        query: query.orders,
+        variables: {
+          where: { ...where, ...queryWhere },
+          first,
+          skip,
+        },
+      });
+      setOrders(data.orders);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(true);
+    }
+  };
+
+  const handleTableChange = (paginationInfo, x, y) => {
+    setPagination(paginationInfo);
+    const skip = DATA_PER_PAGE * (paginationInfo.current - 1);
+    if (x.status) {
+      fetchOrders({ ...where, status: x.status[0] }, skip);
+      return fetchTotal({ ...where, status: x.status[0] });
+    }
+    fetchOrders(where, skip);
+    fetchTotal(where);
+  };
+
+  useEffect(() => {
+    fetchTotal();
+    fetchOrders();
+  }, []);
 
   if (error) return <div>Server Error...</div>;
-
-  const { orders = [] } = data;
 
   const ordersMapped = orders.map((order, index) => {
     const { createdAt, orderBy } = order;
@@ -41,16 +91,51 @@ const Orders = ({ where = {} }) => {
     };
   });
 
+  // const handleChange5 = () => {
+  //   if (DATA_PER_PAGE === '5') {
+  //     pageSize = DATA_PER_PAGE;
+  //   }
+  // };
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="0">
+        <a href="#">5</a>
+        <a href="#">10</a>
+        <a href="#">20</a>
+        <a href="#">30</a>
+        <a href="#">40</a>
+        <a href="#">50</a>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <div>
+      <div
+        style={{
+          textAlign: 'right',
+          marginBottom: 10,
+          padding: 5,
+          fontSize: 14,
+        }}
+      >
+        <Dropdown overlay={menu} trigger={['click']}>
+          <a className="ant-dropdown-link" href="#">
+            View 5 <Icon type="down" />
+          </a>
+        </Dropdown>
+      </div>
       <Table
+        pagination={{ ...pagination }}
         loading={loading}
         onRowClick={order => navigate(`/order/${order.id}`)}
         key={order => order.id}
         dataSource={ordersMapped}
         columns={ordersTable}
-        onChange={console.log('clicked')}
+        onChange={handleTableChange}
       />
+      {/* TODO: VIEW PAGE BY 6 */}
     </div>
   );
 };

@@ -57,15 +57,48 @@ const Sidebar = () => {
           <span>Sellers</span>
         </Menu.Item>
 
-        <Menu.Item onClick={() => navigate('/resellers')}>
-          <Icon type="usergroup-add" />
-          <span>Frenchise</span>
+        <Menu.Item onClick={() => navigate('/franchises')}>
+          <Icon type="team" />
+          <span>Frenchises</span>
         </Menu.Item>
 
         <Menu.Item onClick={() => navigate('/customers')}>
           <Icon type="user" />
           <span>Customers</span>
         </Menu.Item>
+
+        <SubMenu
+          title={
+            <span>
+              <Icon type="bar-chart" />
+              <span>Analytics</span>
+            </span>
+          }
+        >
+          <Menu.Item
+            onClick={() => navigate('/analytics-reports/real-time-reports')}
+          >
+            <Icon type="right-circle" />
+            <span>Real Time</span>
+          </Menu.Item>
+          <Menu.Item onClick={() => navigate('/analytics-reports/orders')}>
+            <Icon type="right-circle" />
+            <span>Orders</span>
+          </Menu.Item>
+          <Menu.Item onClick={() => navigate('/analytics-reports/customers')}>
+            <Icon type="right-circle" />
+            <span>Customers</span>
+          </Menu.Item>
+          <Menu.Item onClick={() => navigate('/analytics-reports/purchase')}>
+            <Icon type="right-circle" />
+            <span>Purchase Funnel</span>
+          </Menu.Item>
+          <Menu.Item onClick={() => navigate('/analytics-reports/search')}>
+            <Icon type="right-circle" />
+            <span>Search</span>
+          </Menu.Item>
+        </SubMenu>
+
         <SubMenu
           title={
             <span>

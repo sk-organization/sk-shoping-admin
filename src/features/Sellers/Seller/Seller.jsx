@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row } from 'antd';
 import { Pie, Line } from 'react-chartjs-2';
-
 import { IMAGE_HOST } from '../../../app/config/constants';
 import client from '../../../app/config/apollo';
-import { FETCH_SELLER } from '../graphql/Queries';
 import margin from '../../../styles/margin';
-
 import Products from '../../Products/Products';
+import { query } from '../graphql';
 
 const Seller = props => {
   const { id } = props;
@@ -16,7 +14,7 @@ const Seller = props => {
   useEffect(() => {
     client
       .query({
-        query: FETCH_SELLER,
+        query: query.seller,
         variables: { id },
       })
       .then(async ({ data }) => {
@@ -75,7 +73,7 @@ const Seller = props => {
             </>
           )}
           <br />
-          {user.bankDetails && (
+          {seller.bankDetails && (
             <>
               Bank Name: <span style={styles}> {bankDetails.bankName}</span>
               <br />

@@ -1,11 +1,12 @@
 import gql from 'graphql-tag';
 
 const products = gql`
-  query($where: ProductWhereInput) {
-    products(first: 20, where: $where) {
+  query($where: ProductWhereInput, $skip: Int = 0, $first: Int = 2) {
+    products(where: $where, skip: $skip, first: $first) {
       id
       name
       price
+      isApproved
       discountPercent
       createdAt
       updatedAt

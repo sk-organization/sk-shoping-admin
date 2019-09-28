@@ -4,8 +4,10 @@ const orders = gql`
   query(
     $where: OrderWhereInput!
     $orderBy: OrderOrderByInput = createdAt_DESC
+    $skip: Int = 0
+    $first: Int = 5
   ) {
-    orders(where: $where, orderBy: $orderBy) {
+    orders(where: $where, orderBy: $orderBy, first: $first, skip: $skip) {
       id
       status
       createdAt

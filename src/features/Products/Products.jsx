@@ -1,13 +1,15 @@
-import React from 'react';
-import { Table, Cascader, Input, Button } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Table, Cascader, Input, Button, Checkbox } from 'antd';
 import { navigate } from '@reach/router';
 import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import { productsTable } from './config';
 import { query } from './graphql';
 import client from '../../app/config/apollo';
 import { margin } from '../../styles';
 
 const { Search } = Input;
+const DATA_PER_PAGE = 8;
 
 const style = {
   textAlign: 'right',
@@ -15,6 +17,71 @@ const style = {
 };
 
 const Products = ({ where = {} }) => {
+  const [pLoading, setpLoading] = useState(false);
+  const [pagination, setPagination] = useState({ pageSize: DATA_PER_PAGE });
+  const [pError, setpError] = useState(false);
+  const [products, setProducts] = useState([]);
+
+  const fetchTotal = async (where = {}) => {
+    const { data } = await client.query({
+      query: gql`
+        query($where: ProductWhereInput) {
+          totalProducts(where: $where)
+        }
+      `,
+      variables: {
+        where,
+      },
+    });
+    setPagination({ ...pagination, total: data.totalProducts });
+  };
+
+  const fetchProducts = async (
+    queryWhere = where || {},
+    skip,
+    first = DATA_PER_PAGE,
+  ) => {
+    try {
+      setpLoading(true);
+      const { data } = await client.query({
+        query: query.products,
+        variables: {
+          where: { isApproved: true, ...where, ...queryWhere },
+          first,
+          skip,
+        },
+      });
+      setProducts(data.products);
+      setpLoading(false);
+    } catch (error) {
+      setpError(true);
+    }
+  };
+
+  const handleTableChange = paginationInfo => {
+    setPagination(paginationInfo);
+    const skip = DATA_PER_PAGE * (paginationInfo.current - 1);
+    fetchTotal(where);
+    fetchProducts(where, skip);
+  };
+
+  useEffect(() => {
+    fetchTotal();
+    fetchProducts();
+  }, []);
+
+  const searchProducts = event => {
+    const term = event.target.value;
+    const where = { name_contains: term };
+    if (term.trim() !== '') {
+      fetchProducts(where);
+      fetchTotal(where);
+    } else {
+      fetchTotal();
+      fetchProducts();
+    }
+  };
+
   const { data: cData = {}, error: cError, loading: cLoading } = useQuery(
     query.categories,
     {
@@ -29,26 +96,17 @@ const Products = ({ where = {} }) => {
     },
   );
 
-  const {
-    data: pData = {},
-    error: pError,
-    loading: pLoading,
-    refetch: fetchProducts,
-  } = useQuery(query.products, {
-    variables: {
-      where,
-    },
-    client,
-  });
-
   if (cError || sError || pError) return <div>Server Error...</div>;
 
   const { categories = [] } = cData;
   const { subCategories = [] } = sData;
-  const { products = [] } = pData;
 
   const productsMapped = products.map(product => ({
     ...product,
+    quickActions: {
+      id: product.id,
+      isApproved: product.isApproved,
+    },
     meta: {
       name: product.name,
       category: product.category.name,
@@ -91,11 +149,23 @@ const Products = ({ where = {} }) => {
         },
       });
     } else {
-      fetchProducts({ where: {} });
+      fetchProducts({ where: { isApproved: true } });
     }
   };
 
   const displayRender = label => label[label.length - 1];
+
+  const handleStatusChanged = event => {
+    if (event.target.checked === true) {
+      fetchProducts({
+        where: {
+          isApproved: false,
+        },
+      });
+    } else {
+      fetchProducts({ where: { isApproved: true } });
+    }
+  };
 
   return (
     <div>
@@ -121,16 +191,7 @@ const Products = ({ where = {} }) => {
           style={{ width: 300, marginLeft: 10 }}
           placeholder="Search Products"
           enterButton="Search"
-          onChange={event => {
-            const term = event.target.value;
-            if (term.trim() !== '') {
-              fetchProducts({
-                where: {
-                  name_contains: term,
-                },
-              });
-            }
-          }}
+          onChange={searchProducts}
         />
         <Button
           style={margin.ml10}
@@ -139,15 +200,20 @@ const Products = ({ where = {} }) => {
         >
           Clear Search
         </Button>
+        <Checkbox style={margin.ml30} onChange={handleStatusChanged}>
+          Show Pending Products
+        </Checkbox>
         <br />
         <br />
       </div>
       <Table
+        pagination={pagination}
         loading={cLoading || sLoading || pLoading}
         className="_products--table"
         rowKey={product => product.id}
         dataSource={productsMapped}
         columns={productsTable}
+        onChange={handleTableChange}
       />
     </div>
   );

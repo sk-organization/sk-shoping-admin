@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-const customers = gql`
-  query {
-    users {
+const users = gql`
+  query($where: UserWhereInput!, $skip: Int = 0, $first: Int = 2) {
+    users(where: $where, first: $first, skip: $skip) {
       id
       name
       email
@@ -66,4 +66,27 @@ const user = gql`
   }
 `;
 
-export { customers, cart, user };
+const searchUsers = gql`
+  query($term: String!) {
+    users(where: { name_contains: $term }, first: 20) {
+      id
+      name
+      email
+      image
+      country
+      phone
+      location {
+        id
+        city
+        zipCode
+        address1
+        address2
+        latitude
+        longitude
+      }
+      gender
+    }
+  }
+`;
+
+export { users, cart, user, searchUsers };

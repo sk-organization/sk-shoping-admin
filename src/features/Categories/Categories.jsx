@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Input, Button, Row, Col, Icon } from 'antd';
+import { Table, Input, Button, Row, Col } from 'antd';
 import { navigate } from '@reach/router';
+import gql from 'graphql-tag';
 import { categoriesTable } from './config';
 
 import { query } from './graphql';
@@ -8,30 +9,60 @@ import client from '../../app/config/apollo';
 import { margin, align, component } from '../../styles';
 
 const { Search } = Input;
+const DATA_PER_PAGE = 2;
 
-const Categories = () => {
+const Categories = ({ where = {} }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [pagination, setPagination] = useState({ pageSize: DATA_PER_PAGE });
   const [categories, setCategories] = useState([]);
 
-  const fetchCategories = async where => {
+  const fetchTotal = async (where = {}) => {
+    const { data } = await client.query({
+      query: gql`
+        query($where: CategoryWhereInput) {
+          totalCategories(where: $where)
+        }
+      `,
+      variables: {
+        where,
+      },
+    });
+    setPagination({ ...pagination, total: data.totalCategories });
+  };
+
+  const fetchCategories = async (
+    queryWhere = where || {},
+    skip,
+    first = DATA_PER_PAGE,
+  ) => {
     try {
       setLoading(true);
-      const res = await client.query({
+      const { data } = await client.query({
         query: query.categories,
         variables: {
-          where,
+          where: { ...where, ...queryWhere },
+          first,
+          skip,
         },
       });
 
-      setCategories(res.data.categories);
+      setCategories(data.categories);
       setLoading(false);
     } catch (error) {
       setError(true);
     }
   };
 
+  const handleTableChange = paginationInfo => {
+    setPagination(paginationInfo);
+    const skip = DATA_PER_PAGE * (paginationInfo.current - 1);
+    fetchTotal(where);
+    fetchCategories(where, skip);
+  };
+
   useEffect(() => {
+    fetchTotal();
     fetchCategories();
   }, []);
 
@@ -41,24 +72,12 @@ const Categories = () => {
 
   const searchCategories = event => {
     const term = event.target.value;
+    const where = { name_contains: term };
     if (term.trim() !== '') {
-      fetchCategories({
-        OR: [
-          {
-            name_contains: term,
-          },
-          {
-            name_contains: term.toLowerCase(),
-          },
-          {
-            name_contains: term.toUpperCase(),
-          },
-          {
-            name_contains: term[0].toUpperCase() + term.slice(1),
-          },
-        ],
-      });
+      fetchCategories(where);
+      fetchTotal(where);
     } else {
+      fetchTotal();
       fetchCategories();
     }
   };
@@ -90,11 +109,13 @@ const Categories = () => {
         </Col>
       </Row>
       <Table
+        pagination={pagination}
         loading={loading}
         className="_categories--table"
         rowKey={category => category.id}
         dataSource={categoriesMapped}
         columns={categoriesTable}
+        onChange={handleTableChange}
       />
     </div>
   );

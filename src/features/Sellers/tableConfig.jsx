@@ -55,7 +55,7 @@ export const userColumns = [
     title: 'Image',
     dataIndex: 'user.image',
     key: 'image',
-    render: image => <Avatar src={IMAGE_HOST + image} />,
+    render: image => <Avatar size={60} src={IMAGE_HOST + image} />,
   },
   {
     title: 'Name',
