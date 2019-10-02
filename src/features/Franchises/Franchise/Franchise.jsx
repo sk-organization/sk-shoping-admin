@@ -1,7 +1,6 @@
 import React from 'react';
 import { Row, Col, Tag, Table, Avatar } from 'antd';
 import { Line } from 'react-chartjs-2';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
 import { useQuery } from '@apollo/react-hooks';
 import client from '../../../app/config/apollo';
 import { query } from '../graphql';
@@ -10,13 +9,7 @@ import BasicInfo from './BasicInfo';
 import { IMAGE_HOST } from '../../../app/config/constants';
 import LocationInfo from './LocationInfo';
 import SellerInfo from './SellerInfo';
-
-const { google } = 'dfs';
-
-const mapStyles = {
-  width: '100%',
-  height: '100%',
-};
+import MapContainer from './Map';
 
 const Frenchise = props => {
   const { id } = props;
@@ -48,12 +41,11 @@ const Frenchise = props => {
       <h3>Frenchise</h3>
       <Row>
         <Col span={14}>
-          <p>Geo Location Map</p>
-          <Map
-            google={google}
-            zoom={8}
-            style={mapStyles}
-            initialCenter={{ lat: 47.444, lng: -122.176 }}
+          {/* <MapContainer /> */}
+          <iframe
+            src="https://www.google.com/maps/d/u/0/embed?mid=1ossilf9enwxkYMr9umyFWZjCmZ2oaLls"
+            width="100%"
+            height="300"
           />
         </Col>
         <Col span={10}>

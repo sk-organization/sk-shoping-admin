@@ -22,7 +22,6 @@ import Order from './features/Orders/Order/Order';
 import Customers from './features/Customers/Customers';
 import Customer from './features/Customers/Customer/Customer';
 import Settings from './features/Settings/Settings';
-import Carousel from './features/Settings/Carousel';
 import Reports from './features/Reports/Reports';
 import FrenchiseReport from './features/Reports/Frenchise/FrenchiseReport';
 import Sales from './features/Reports/Sales/Sales';
@@ -44,6 +43,9 @@ import OrderReport from './features/Analytics/Orders/Order/Order';
 import SearchReport from './features/Analytics/Search/Search';
 import RealTimeReports from './features/Analytics/RealTime/RealTime';
 import PurchaseFunnel from './features/Analytics/Purchase/Purchase';
+import Carousel from './features/Settings/Carousel';
+import AddCarousel from './features/Settings/AddNewCarousel/AddNewCarousel';
+import EditCarousel from './features/Categories/AddCategory/EditCarousel';
 
 const { Content } = Layout;
 
@@ -154,6 +156,8 @@ const App = () => {
             {/* Settings Sections */}
             <Settings path="/settings" />
             <Carousel path="/carousel" />
+            <AddCarousel path="/carousel/add-new-carousel" />
+            <EditCarousel path="/carousel/edit-carousel" />
 
             {/* Admin Sections */}
             <Admins path="/admin/admins" />

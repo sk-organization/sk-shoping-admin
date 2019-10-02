@@ -9,7 +9,7 @@ import client from '../../app/config/apollo';
 import { margin } from '../../styles';
 
 const { Search } = Input;
-const DATA_PER_PAGE = 8;
+const DATA_PER_PAGE = 5;
 
 const style = {
   textAlign: 'right',
@@ -138,7 +138,7 @@ const Products = ({ where = {} }) => {
     ),
   }));
 
-  const onChange = (_, option) => {
+  const onChangeList = (_, option) => {
     if (option[0]) {
       const subCategoryId = option[1].id;
       fetchProducts({
@@ -184,7 +184,7 @@ const Products = ({ where = {} }) => {
           options={categoriesMapped}
           expandTrigger="hover"
           displayRender={displayRender}
-          onChange={onChange}
+          onChange={onChangeList}
         />
         <Search
           autoComplete="on"

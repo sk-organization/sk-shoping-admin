@@ -75,7 +75,7 @@ const AddSubCategories = props => {
       });
       navigate('/sub-categories');
     } catch (error) {
-
+      console.log(error);
     }
   };
   return (

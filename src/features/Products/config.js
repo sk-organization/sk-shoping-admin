@@ -1,9 +1,9 @@
 import React from 'react';
 import { Avatar, Menu, Dropdown, Icon, Tag } from 'antd';
+import gql from 'graphql-tag';
 import { navigate } from '@reach/router';
 import client from '../../app/config/apollo';
 import { IMAGE_HOST } from '../../app/config/constants';
-import gql from 'graphql-tag';
 
 const productsTable = [
   {
@@ -37,7 +37,7 @@ const productsTable = [
           <strong>{meta.category.replace('-', ' ')}</strong>
         </div>
 
-        <div>
+        {/* <div>
           Actual Price:
           <strong>{meta.price}</strong>
         </div>
@@ -60,7 +60,7 @@ const productsTable = [
           {meta.tags.map(tag => (
             <Tag color="purple">{tag.name}</Tag>
           ))}
-        </div>
+        </div> */}
         <br />
         <div>
           <strong style={{ color: 'Green', fontSize: 18 }}>

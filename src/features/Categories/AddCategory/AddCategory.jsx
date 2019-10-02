@@ -50,7 +50,7 @@ const AddCategories = () => {
       });
       navigate('/categories');
     } catch (error) {
-
+      console.log(error);
     }
   };
 

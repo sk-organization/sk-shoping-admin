@@ -84,9 +84,9 @@ const Franchises = ({ where = {} }) => {
   const franchisesMapped = franchises.map((franchise, index) => ({
     ...franchise,
     sn: index + 1,
+    image: franchise.user.image,
     franchiseInfo: {
       name: franchise.user.name,
-      image: franchise.user.image,
       email: franchise.user.email,
       phone: franchise.user.phone,
       gender: franchise.user.gender,

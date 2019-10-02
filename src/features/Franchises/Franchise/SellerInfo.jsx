@@ -14,7 +14,7 @@ const SellerInfo = ({ sellerInfo }) => {
 
   return (
     <div>
-      <h3>Seller Info</h3>
+      <h3>Franchise Info</h3>
       <div>
         Education:
         <strong>{education}</strong>

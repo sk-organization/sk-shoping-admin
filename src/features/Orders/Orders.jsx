@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Dropdown, Menu, Icon } from 'antd';
+import { Table, Dropdown, Menu, Icon, Checkbox } from 'antd';
 import { navigate } from '@reach/router';
 import gql from 'graphql-tag';
 import { query } from './graphql';
@@ -12,8 +12,8 @@ const Orders = ({ where = {} }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [pagination, setPagination] = useState({ pageSize: DATA_PER_PAGE });
+  const [sortedInfo, setSortedInfo] = useState(null);
   const [orders, setOrders] = useState([]);
-
   const fetchTotal = async (where = {}) => {
     const { data } = await client.query({
       query: gql`
@@ -32,6 +32,7 @@ const Orders = ({ where = {} }) => {
     queryWhere = where || {},
     skip,
     first = DATA_PER_PAGE,
+    orderBy = 'createdAt_DESC',
   ) => {
     try {
       setLoading(true);
@@ -41,6 +42,7 @@ const Orders = ({ where = {} }) => {
           where: { ...where, ...queryWhere },
           first,
           skip,
+          orderBy,
         },
       });
       setOrders(data.orders);
@@ -51,13 +53,25 @@ const Orders = ({ where = {} }) => {
     }
   };
 
-  const handleTableChange = (paginationInfo, x, y) => {
+  const handleTableChange = (paginationInfo, x, sorter) => {
     setPagination(paginationInfo);
     const skip = DATA_PER_PAGE * (paginationInfo.current - 1);
+    setSortedInfo(sorter);
+
+    if (sorter.columnKey === 'totalProducts') {
+      if (sorter.order === 'ascend') {
+        fetchOrders(where, skip, null, 'totalProducts_ASC');
+        return fetchTotal(where);
+      }
+      fetchOrders(where, skip, null, 'totalProducts_DESC');
+      return fetchTotal(where);
+    }
+
     if (x.status) {
       fetchOrders({ ...where, status: x.status[0] }, skip);
       return fetchTotal({ ...where, status: x.status[0] });
     }
+    console.log(sorter);
     fetchOrders(where, skip);
     fetchTotal(where);
   };
