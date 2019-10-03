@@ -53,7 +53,7 @@ const Orders = ({ where = {} }) => {
     }
   };
 
-  const handleTableChange = (paginationInfo, x, sorter) => {
+  const handleTableChange = (paginationInfo, x, y, sorter) => {
     setPagination(paginationInfo);
     const skip = DATA_PER_PAGE * (paginationInfo.current - 1);
     setSortedInfo(sorter);

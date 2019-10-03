@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import DraggableList from 'react-draggable-list';
-import { Row, Col, Switch, Button, Dropdown, Icon, Menu } from 'antd';
+import { Switch, Button, Dropdown, Icon, Menu } from 'antd';
 import { navigate } from '@reach/router';
 
 import client from '../../app/config/apollo';

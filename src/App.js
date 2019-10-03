@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable quotes */
 import React, { useState } from 'react';
 import { Layout, PageHeader } from 'antd';
@@ -43,6 +44,7 @@ import OrderReport from './features/Analytics/Orders/Order/Order';
 import SearchReport from './features/Analytics/Search/Search';
 import RealTimeReports from './features/Analytics/RealTime/RealTime';
 import PurchaseFunnel from './features/Analytics/Purchase/Purchase';
+// eslint-disable-next-line import/no-named-as-default
 import Carousel from './features/Settings/Carousel';
 import AddCarousel from './features/Settings/AddNewCarousel/AddNewCarousel';
 import EditCarousel from './features/Categories/AddCategory/EditCarousel';

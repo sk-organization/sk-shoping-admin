@@ -39,6 +39,8 @@ const AddCarousel = () => {
     fetchCarousels();
   }, []);
 
+  if (error) return <div>Error....</div>;
+
   console.log(carousels);
 
   const addCarousel = async values => {
