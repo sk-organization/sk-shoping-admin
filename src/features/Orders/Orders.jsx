@@ -56,16 +56,16 @@ const Orders = ({ where = {} }) => {
   const handleTableChange = (paginationInfo, x, y, sorter) => {
     setPagination(paginationInfo);
     const skip = DATA_PER_PAGE * (paginationInfo.current - 1);
-    setSortedInfo(sorter);
+    // setSortedInfo(sorter);
 
-    if (sorter.columnKey === 'totalProducts') {
-      if (sorter.order === 'ascend') {
-        fetchOrders(where, skip, null, 'totalProducts_ASC');
-        return fetchTotal(where);
-      }
-      fetchOrders(where, skip, null, 'totalProducts_DESC');
-      return fetchTotal(where);
-    }
+    // if (sorter.columnKey === 'totalProducts') {
+    //   if (sorter.order === 'ascend') {
+    //     fetchOrders(where, skip, null, 'totalProducts_ASC');
+    //     return fetchTotal(where);
+    //   }
+    //   fetchOrders(where, skip, null, 'totalProducts_DESC');
+    //   return fetchTotal(where);
+    // }
 
     if (x.status) {
       fetchOrders({ ...where, status: x.status[0] }, skip);

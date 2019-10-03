@@ -42,8 +42,8 @@ const ordersTable = [
   {
     title: 'Quantity',
     dataIndex: 'totalProducts',
-    defaultSortOrder: 'descend',
-    sorter: (a, b) => a.age - b.age,
+    // defaultSortOrder: 'descend',
+    // sorter: (a, b) => a.age - b.age,
   },
   {
     title: 'Order Total',

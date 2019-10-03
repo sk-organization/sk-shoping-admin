@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Icon, Table, Spin, Steps } from 'antd';
-import { differenceInBusinessDays } from 'date-fns';
+import { differenceInCalendarDays } from 'date-fns';
 import { query } from '../graphql';
 import Customer from './BasicInfo/Customer';
 import { useData } from '../../hooks';
@@ -77,21 +77,21 @@ const OrderInfo = props => {
 
   let step = 0;
 
-  const difference = differenceInBusinessDays(
+  const difference = differenceInCalendarDays(
     new Date(order.createdAt),
     new Date(),
   );
 
   if (difference === -1) {
     step = 1;
-  } else if (difference === -2) {
+  } else if (difference < -1) {
     step = 2;
   }
 
   if (order.status === 'RECEIVED') {
     step = 3;
   }
-
+  console.log(order.createdAt);
   console.log(order);
 
   return (
